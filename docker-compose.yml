@@ -1,0 +1,31 @@
+version: '3'
+
+services: 
+  db:
+    image: mysql:5.7
+    volumes: 
+      - db_data:/var/lib/mysql
+    restart: always
+    ports: 
+      - 3306:3306
+    environment: 
+      MYSQL_ROOT_PASSWORD: banana
+    networks: 
+      - dev_networks
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    depends_on: 
+      - db
+    container_name: phpmyadmin
+    ports: 
+      - "80:80"
+    restart: always
+    networks: 
+      - dev_networks
+
+
+networks: 
+  dev_networks:
+volumes: 
+  db_data:
